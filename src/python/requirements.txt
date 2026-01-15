@@ -1,4 +1,5 @@
 aiohttp>=3.12.13,<4.0.0
+agent-framework
 asyncpg>=0.30.0,<0.31.0
 azure-ai-agents==1.1.0b4
 azure-ai-projects==1.0.0b12
