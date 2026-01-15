@@ -127,7 +127,7 @@ async def initialize_agent():
             client = AzureAIClient(
                 project_endpoint=ENDPOINT,
                 model_deployment_name=MODEL_DEPLOYMENT_NAME,
-                credential=credential_instance,
+                async_credential=credential_instance,
                 agent_name=AGENT_NAME,
             )
             

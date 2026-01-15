@@ -23,3 +23,5 @@ src/workshop/[.][v]env/
 /src/shared/files
 DevTunnels/devtunnels-tokens-microsoft
 DevTunnels/devtunnels.json
+src/python/web_app/uploads
+script.txt
