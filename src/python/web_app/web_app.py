@@ -71,9 +71,9 @@ def create_mcp_tools() -> list[ToolProtocol]:
         MCPStdioTool(
             name="zava_customer_sales_stdio",
             description="MCP server for Zava customer sales analysis",
-            command="python",
+            command="/workspace/.venv/bin/python",
             args=[
-                "src/python/mcp_server/customer_sales/customer_sales.py",
+                "/workspace/src/python/mcp_server/customer_sales/customer_sales.py",
                 "--stdio",
                 "--RLS_USER_ID=00000000-0000-0000-0000-000000000000",
             ]
@@ -121,12 +121,13 @@ async def initialize_agent():
         try:
             # Use AzureCliCredential like cora-agent-demo.py
             credential_instance = AzureCliCredential()
+            await credential_instance.__aenter__()
             
             # Create AzureAIClient for Foundry project endpoint
             client = AzureAIClient(
                 project_endpoint=ENDPOINT,
                 model_deployment_name=MODEL_DEPLOYMENT_NAME,
-                async_credential=credential_instance,
+                credential=credential_instance,
                 agent_name=AGENT_NAME,
             )
             
