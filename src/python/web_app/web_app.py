@@ -95,6 +95,7 @@ templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
 # Global agent instance and thread storage
 agent_instance = None
 credential_instance = None
+async_exit_stack = None  # For managing async context
 agent_threads = {}  # Store threads per session
 
 # Agent instructions for Cora AI assistant
@@ -122,27 +123,29 @@ If no matching products are found in Zava's catalog, say:
 
 async def initialize_agent():
     """Initialize the Agent Framework agent using AzureAIClient"""
-    global agent_instance, credential_instance
+    global agent_instance, credential_instance, async_exit_stack
     if agent_instance is None:
         try:
-            # Use AzureCliCredential like cora-agent-demo.py
-            credential_instance = AzureCliCredential()
+            # Create async exit stack to manage the credential lifecycle
+            if async_exit_stack is None:
+                async_exit_stack = AsyncExitStack()
 
-            # Create AzureAIClient for Foundry project endpoint
-            client = AzureAIClient(
-                project_endpoint=ENDPOINT,
-                model_deployment_name=MODEL_DEPLOYMENT_NAME,
-                async_credential=credential_instance,
-                agent_name=AGENT_NAME,
-            )
+            # Create and manage the AzureCliCredential within the exit stack
+            credential_instance = await async_exit_stack.enter_async_context(AzureCliCredential())
 
-            # Create agent with the Azure AI client
-            agent_instance = client.create_agent(
-                name=AGENT_NAME,
-                instructions=AGENT_INSTRUCTIONS,
-                tools=[
-                    *create_mcp_tools(),
-                ],
+            # Create agent using AzureAIClient.as_agent() for long-running apps
+            agent_instance = await async_exit_stack.enter_async_context(
+                AzureAIClient(
+                    project_endpoint=ENDPOINT,
+                    model_deployment_name=MODEL_DEPLOYMENT_NAME,
+                    credential=credential_instance,
+                ).as_agent(
+                    name=AGENT_NAME,
+                    instructions=AGENT_INSTRUCTIONS,
+                    tools=[
+                        *create_mcp_tools(),
+                    ],
+                )
             )
             logger.info(
                 "Agent Framework initialized successfully with AzureAIClient")
@@ -348,7 +351,7 @@ async def startup_event():
 @app.on_event("shutdown")
 async def shutdown_event():
     """Clean up resources on shutdown"""
-    global agent_instance, credential_instance
+    global agent_instance, credential_instance, async_exit_stack
     if agent_instance:
         try:
             # Agent cleanup if needed
@@ -357,12 +360,14 @@ async def shutdown_event():
             logger.error(f"Error during agent cleanup: {e}")
         agent_instance = None
 
-    if credential_instance:
+    if async_exit_stack:
         try:
-            await credential_instance.close()
+            await async_exit_stack.aclose()
         except Exception as e:
-            logger.error(f"Error during credential cleanup: {e}")
-        credential_instance = None
+            logger.error(f"Error during async exit stack cleanup: {e}")
+        async_exit_stack = None
+
+    credential_instance = None
 
 if __name__ == "__main__":
     uvicorn.run(
