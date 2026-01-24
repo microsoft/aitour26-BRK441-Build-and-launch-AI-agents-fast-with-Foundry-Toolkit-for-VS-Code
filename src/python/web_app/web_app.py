@@ -24,7 +24,7 @@ STATIC_DIR = SHARED_STATIC_DIR if SHARED_STATIC_DIR.exists() else Path("static")
 TEMPLATES_DIR = STATIC_DIR if STATIC_DIR.exists() else Path("templates")
 
 # Agent Framework imports
-from agent_framework import ChatAgent, MCPStdioTool, ToolProtocol, ChatMessage, TextContent, DataContent
+from agent_framework import ChatAgent, MCPStdioTool, ToolProtocol, ChatMessage, Content
 from agent_framework.azure import AzureAIClient
 from azure.identity.aio import AzureCliCredential
 
@@ -278,8 +278,8 @@ async def simulate_ai_agent(user_message: str, image_url: Optional[str] = None, 
                         ChatMessage(
                             role="user",
                             contents=[
-                                TextContent(text=user_message),
-                                DataContent(data=image_bytes, media_type=mime_type)
+                                Content.from_text(user_message),
+                                Content.from_data(image_bytes, mime_type)
                             ]
                         )
                     ]
