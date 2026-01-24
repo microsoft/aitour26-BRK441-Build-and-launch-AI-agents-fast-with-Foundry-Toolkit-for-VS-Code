@@ -92,11 +92,10 @@ app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 app.mount("/uploads", StaticFiles(directory=str(UPLOAD_DIR)), name="uploads")
 templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
 
-# Global agent instance and thread storage
+# Global agent instance
 agent_instance = None
 credential_instance = None
 async_exit_stack = None  # For managing async context
-agent_threads = {}  # Store threads per session
 
 # Agent instructions for Cora AI assistant
 AGENT_INSTRUCTIONS = """You are Cora, an intelligent and friendly AI assistant for Zava, a home improvement brand. You help customers with their DIY projects by understanding their needs and recommending the most suitable products from Zava's catalog.
@@ -255,7 +254,7 @@ async def simulate_ai_agent(user_message: str, image_url: Optional[str] = None, 
     """
     Process user message using Cora AI agent with Agent Framework
     """
-    global agent_instance, agent_threads
+    global agent_instance
 
     # Initialize agent if not already done
     if agent_instance is None:
@@ -266,12 +265,6 @@ async def simulate_ai_agent(user_message: str, image_url: Optional[str] = None, 
         return "I'm sorry, I'm having trouble connecting to my tools right now. Please try again later."
 
     try:
-        # Get or create thread for this session
-        if session_id not in agent_threads:
-            agent_threads[session_id] = agent_instance.get_new_thread()
-
-        thread = agent_threads[session_id]
-
         # Prepare message with image if provided
         if image_url:
             logger.info(f"Processing message with image: {image_url}")
@@ -307,29 +300,29 @@ async def simulate_ai_agent(user_message: str, image_url: Optional[str] = None, 
                     logger.info(
                         f"Sending message with image to agent: {user_message}")
 
-                    # Stream response from agent with image
+                    # Stream response from agent with image (no thread - each request is independent)
                     response_text = ""
-                    async for chunk in agent_instance.run_stream(message_with_image, thread=thread):
+                    async for chunk in agent_instance.run_stream(message_with_image):
                         if chunk.text:
                             response_text += chunk.text
                 else:
                     logger.warning(f"Image file not found: {file_path}")
                     # Fall back to text-only processing
                     response_text = ""
-                    async for chunk in agent_instance.run_stream(user_message, thread=thread):
+                    async for chunk in agent_instance.run_stream(user_message):
                         if chunk.text:
                             response_text += chunk.text
             else:
                 logger.warning(f"Invalid image URL format: {image_url}")
                 # Fall back to text-only processing
                 response_text = ""
-                async for chunk in agent_instance.run_stream(user_message, thread=thread):
+                async for chunk in agent_instance.run_stream(user_message):
                     if chunk.text:
                         response_text += chunk.text
         else:
-            # Stream response from agent (text only)
+            # Stream response from agent (text only, no thread)
             response_text = ""
-            async for chunk in agent_instance.run_stream(user_message, thread=thread):
+            async for chunk in agent_instance.run_stream(user_message):
                 if chunk.text:
                     response_text += chunk.text
 
