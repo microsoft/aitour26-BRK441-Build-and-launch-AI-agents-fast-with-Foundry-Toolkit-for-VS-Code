@@ -2,7 +2,7 @@
 
 from dotenv import load_dotenv
 from azure.identity.aio import AzureCliCredential
-from agent_framework.azure import AzureAIClient
+from agent_framework.azure import AzureAIAgentClient
 from agent_framework import ChatAgent, MCPStdioTool, ToolProtocol, ChatMessage, Content
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect, UploadFile, File
 from fastapi.responses import HTMLResponse
@@ -65,7 +65,7 @@ def get_image_mime_type(filename: str) -> str:
 # Agent Framework Configuration - matching cora-agent-demo.py
 ENDPOINT = os.environ.get("AZURE_AI_FOUNDRY_ENDPOINT",
                           "your_foundry_endpoint_here")
-MODEL_DEPLOYMENT_NAME = os.environ.get("MODEL_DEPLOYMENT_NAME", "gpt-4.1-mini")
+MODEL_DEPLOYMENT_NAME = os.environ.get("MODEL_DEPLOYMENT_NAME", "gpt-4.1-mini-1")
 AGENT_NAME = "cora-web-agent"
 
 
@@ -124,17 +124,21 @@ async def initialize_agent():
     """Initialize the Agent Framework agent using AzureAIClient"""
     global agent_instance, credential_instance, async_exit_stack
     if agent_instance is None:
-        try:
-            # Create async exit stack to manage the credential lifecycle
+        try:            # Remove problematic CA bundle environment variables that interfere with Azure CLI
+            for var in ['REQUESTS_CA_BUNDLE', 'CURL_CA_BUNDLE']:
+                if var in os.environ and os.environ[var] == '':
+                    del os.environ[var]
+                    logger.info(f"Removed empty {var} environment variable")
+                        # Create async exit stack to manage the credential lifecycle
             if async_exit_stack is None:
                 async_exit_stack = AsyncExitStack()
 
             # Create and manage the AzureCliCredential within the exit stack
             credential_instance = await async_exit_stack.enter_async_context(AzureCliCredential())
 
-            # Create agent using AzureAIClient.as_agent() for long-running apps
+            # Create agent using AzureAIAgentClient.as_agent() for long-running apps
             agent_instance = await async_exit_stack.enter_async_context(
-                AzureAIClient(
+                AzureAIAgentClient(
                     project_endpoint=ENDPOINT,
                     model_deployment_name=MODEL_DEPLOYMENT_NAME,
                     credential=credential_instance,
@@ -147,7 +151,7 @@ async def initialize_agent():
                 )
             )
             logger.info(
-                "Agent Framework initialized successfully with AzureAIClient")
+                "Agent Framework initialized successfully with AzureAIAgentClient")
         except Exception as e:
             logger.error(f"Failed to initialize Agent Framework: {e}")
             import traceback

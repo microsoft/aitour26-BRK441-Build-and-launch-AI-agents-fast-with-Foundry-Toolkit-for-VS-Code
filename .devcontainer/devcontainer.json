@@ -16,6 +16,7 @@
         //     "version": "9.0"
         // }
     },
+    "postCreateCommand": "pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -r requirements-dev.txt",
     "customizations": {
         "vscode": {
             "extensions": [
