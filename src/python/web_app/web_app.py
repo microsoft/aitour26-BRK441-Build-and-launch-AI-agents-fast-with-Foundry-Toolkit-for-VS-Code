@@ -11,6 +11,7 @@ from typing import List, Dict, Optional
 import logging
 import base64
 import os
+import sys
 from contextlib import AsyncExitStack
 import uuid
 from pathlib import Path
@@ -24,9 +25,9 @@ STATIC_DIR = SHARED_STATIC_DIR if SHARED_STATIC_DIR.exists() else Path("static")
 TEMPLATES_DIR = STATIC_DIR if STATIC_DIR.exists() else Path("templates")
 
 # Agent Framework imports
-from agent_framework import ChatAgent, MCPStdioTool, ToolProtocol, ChatMessage, TextContent, DataContent
+from agent_framework import RawAgent, MCPStdioTool, Message, Content
 from agent_framework.azure import AzureAIClient
-from azure.identity.aio import AzureCliCredential
+from azure.identity.aio import DefaultAzureCredential
 
 
 from dotenv import load_dotenv
@@ -64,16 +65,17 @@ def get_image_mime_type(filename: str) -> str:
 ENDPOINT = os.environ.get("AZURE_AI_FOUNDRY_ENDPOINT", "your_foundry_endpoint_here")
 MODEL_DEPLOYMENT_NAME = os.environ.get("MODEL_DEPLOYMENT_NAME", "gpt-4.1-mini")
 AGENT_NAME = "cora-web-agent"
+MCP_PYTHON_COMMAND = os.environ.get("MCP_PYTHON_COMMAND", sys.executable)
 
-def create_mcp_tools() -> list[ToolProtocol]:
+def create_mcp_tools() -> list[MCPStdioTool]:
     """Create MCP tools for the agent"""
     return [
         MCPStdioTool(
             name="zava_customer_sales_stdio",
             description="MCP server for Zava customer sales analysis",
-            command="python",
+            command=MCP_PYTHON_COMMAND,
             args=[
-                "src/python/mcp_server/customer_sales/customer_sales.py",
+                "/workspace/src/python/mcp_server/customer_sales/customer_sales.py",
                 "--stdio",
                 "--RLS_USER_ID=00000000-0000-0000-0000-000000000000",
             ]
@@ -87,10 +89,10 @@ app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 app.mount("/uploads", StaticFiles(directory=str(UPLOAD_DIR)), name="uploads")
 templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
 
-# Global agent instance and thread storage
+# Global agent instance and session storage
 agent_instance = None
 credential_instance = None
-agent_threads = {}  # Store threads per session
+agent_sessions = {}  # Store sessions per session ID
 
 # Agent instructions for Cora AI assistant
 AGENT_INSTRUCTIONS = """You are Cora, an intelligent and friendly AI assistant for Zava, a home improvement brand. You help customers with their DIY projects by understanding their needs and recommending the most suitable products from Zava's catalog.
@@ -119,19 +121,20 @@ async def initialize_agent():
     global agent_instance, credential_instance
     if agent_instance is None:
         try:
-            # Use AzureCliCredential like cora-agent-demo.py
-            credential_instance = AzureCliCredential()
+            # Use DefaultAzureCredential for better token refresh handling
+            credential_instance = DefaultAzureCredential()
+            await credential_instance.__aenter__()
             
             # Create AzureAIClient for Foundry project endpoint
             client = AzureAIClient(
                 project_endpoint=ENDPOINT,
                 model_deployment_name=MODEL_DEPLOYMENT_NAME,
-                async_credential=credential_instance,
+                credential=credential_instance,
                 agent_name=AGENT_NAME,
             )
             
-            # Create agent with the Azure AI client
-            agent_instance = client.create_agent(
+            # Create agent with the Azure AI client using as_agent()
+            agent_instance = client.as_agent(
                 name=AGENT_NAME,
                 instructions=AGENT_INSTRUCTIONS,
                 tools=[
@@ -236,7 +239,7 @@ async def simulate_ai_agent(user_message: str, image_url: Optional[str] = None, 
     """
     Process user message using Cora AI agent with Agent Framework
     """
-    global agent_instance, agent_threads
+    global agent_instance, agent_sessions
     
     # Initialize agent if not already done
     if agent_instance is None:
@@ -247,11 +250,11 @@ async def simulate_ai_agent(user_message: str, image_url: Optional[str] = None, 
         return "I'm sorry, I'm having trouble connecting to my tools right now. Please try again later."
     
     try:
-        # Get or create thread for this session
-        if session_id not in agent_threads:
-            agent_threads[session_id] = agent_instance.get_new_thread()
-        
-        thread = agent_threads[session_id]
+        # Get or create session for this session ID
+        if session_id not in agent_sessions:
+            agent_sessions[session_id] = agent_instance.create_session(session_id=session_id)
+
+        session = agent_sessions[session_id]
         
         # Prepare message with image if provided
         if image_url:
@@ -272,45 +275,35 @@ async def simulate_ai_agent(user_message: str, image_url: Optional[str] = None, 
                     
                     logger.info(f"Image loaded: {len(image_bytes)} bytes, MIME type: {mime_type}")
                     
-                    # Create a ChatMessage with multimodal content using DataContent
+                    # Create a Message with multimodal content using Content factory methods
                     # Note: use 'contents' (plural) not 'content'
                     message_with_image = [
-                        ChatMessage(
+                        Message(
                             role="user",
                             contents=[
-                                TextContent(text=user_message),
-                                DataContent(data=image_bytes, media_type=mime_type)
+                                Content.from_text(user_message),
+                                Content.from_data(image_bytes, media_type=mime_type)
                             ]
                         )
                     ]
                     
                     logger.info(f"Sending message with image to agent: {user_message}")
                     
-                    # Stream response from agent with image
-                    response_text = ""
-                    async for chunk in agent_instance.run_stream(message_with_image, thread=thread):
-                        if chunk.text:
-                            response_text += chunk.text
+                    response = await agent_instance.run(message_with_image, session=session)
+                    response_text = response.text or ""
                 else:
                     logger.warning(f"Image file not found: {file_path}")
                     # Fall back to text-only processing
-                    response_text = ""
-                    async for chunk in agent_instance.run_stream(user_message, thread=thread):
-                        if chunk.text:
-                            response_text += chunk.text
+                    response = await agent_instance.run(user_message, session=session)
+                    response_text = response.text or ""
             else:
                 logger.warning(f"Invalid image URL format: {image_url}")
                 # Fall back to text-only processing
-                response_text = ""
-                async for chunk in agent_instance.run_stream(user_message, thread=thread):
-                    if chunk.text:
-                        response_text += chunk.text
+                response = await agent_instance.run(user_message, session=session)
+                response_text = response.text or ""
         else:
-            # Stream response from agent (text only)
-            response_text = ""
-            async for chunk in agent_instance.run_stream(user_message, thread=thread):
-                if chunk.text:
-                    response_text += chunk.text
+            response = await agent_instance.run(user_message, session=session)
+            response_text = response.text or ""
         
         return response_text if response_text else "I processed your request, but I'm having trouble generating a response. Please try rephrasing your question."
             
@@ -318,6 +311,12 @@ async def simulate_ai_agent(user_message: str, image_url: Optional[str] = None, 
         logger.error(f"Error in AI agent processing: {e}")
         import traceback
         traceback.print_exc()
+        
+        # Clear corrupted session to prevent state mismatch errors
+        if session_id in agent_sessions:
+            del agent_sessions[session_id]
+            logger.info(f"Cleared corrupted session for session_id: {session_id}")
+        
         return f"I encountered an error while processing your request: {str(e)}. Please try again."
 
 @app.on_event("startup")

@@ -18,6 +18,7 @@ import asyncio
 import json
 import logging
 import os
+import re
 from typing import Optional
 
 import asyncpg
@@ -127,6 +128,38 @@ class PostgreSQLCustomerSales:
                 query,
                 f"%{product_name}%", max_rows
             )
+
+            if not rows:
+                stop_words = {
+                    "zava", "the", "a", "an", "for", "with", "and", "or", "by", "to", "of", "in", "on", "at", "from"
+                }
+                tokens = [
+                    token for token in re.findall(r"[a-z0-9]+", product_name.lower())
+                    if len(token) > 1 and token not in stop_words
+                ]
+
+                if tokens:
+                    conditions = []
+                    params = []
+                    for index, token in enumerate(tokens, start=1):
+                        placeholder = f"${index}"
+                        conditions.append(f"(p.product_name ILIKE {placeholder} OR p.product_description ILIKE {placeholder})")
+                        params.append(f"%{token}%")
+
+                    limit_placeholder = f"${len(tokens) + 1}"
+                    fallback_query = f"""
+                        SELECT p.product_name, pt.type_name, c.category_name, p.base_price as price, SUM(i.stock_level) AS total_stock
+                        FROM retail.products p
+                        JOIN retail.product_types pt ON p.type_id = pt.type_id
+                        JOIN retail.categories c ON p.category_id = c.category_id
+                        JOIN retail.inventory i ON p.product_id = i.product_id
+                        WHERE {' AND '.join(conditions)}
+                        GROUP BY p.product_name, pt.type_name, c.category_name, p.base_price
+                        ORDER BY p.product_name
+                        LIMIT {limit_placeholder};
+                    """
+
+                    rows = await conn.fetch(fallback_query, *params, max_rows)
 
             if not rows:
                 return json.dumps(

@@ -42,7 +42,7 @@ Select the demo name to view instructions for how to deliver the demo. A full tr
 [Create Agents with Agent Builder](/02-session-delivery-resources/demos-instructions/create-agents.md)   | Create the Cora agent in the **Agent Builder** and define it's system prompt. |  [Demo video](https://aka.ms/AAxq4rm)
 [Add Tools to an Agent in Agent Builder](/03-session-delivery-resources/demos-instructions/add-tools.md)   | Connect the Cora agent to the **Zava MCP server** and add the **get_products_by_name** tool. | [Demo video](https://aka.ms/AAxqc9k)
 [Evaluate Agent Responses](/04-session-delivery-resources/demos-instructions/evaluate-agent-responses.md)   |  Use **GitHub Copilot Agent Mode** to get evalator recommendations. Run both **manual** and **AI-assisted** evaluations for the agent output. | [Demo video](https://aka.ms/AAxqc9h)
-[Export Agent Code](/05-session-delivery-resources/demos-instructions/export-agent-code.md)   | Export the code from the **Agent Builder** for the Cora agent. Chat with the Cora agent live via the ageng UI. | [Demo video](https://aka.ms/AAxq4rl)
+[Export Agent Code](/05-session-delivery-resources/demos-instructions/export-agent-code.md)   | Export the code from the **Agent Builder** for the Cora agent. Chat with the Cora agent live via the agent UI. | [Demo video](https://aka.ms/AAxq4rl)
 
 ## 🏋️Prepare Your Environment
 
