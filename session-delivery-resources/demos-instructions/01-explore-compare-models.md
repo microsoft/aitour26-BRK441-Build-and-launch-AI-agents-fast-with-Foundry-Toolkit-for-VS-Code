@@ -7,7 +7,7 @@ Use **GitHub Copilot Agent Mode** to get model recommendations. Browse the **Mod
 1. Open **GitHub Copilot** and select **Agent Mode** and one of the **Claude** models (ex: **Claude Sonnet 4.5**). 
 1. Ask GitHub Copilot:
     ```I'm creating an agent for a home improvement company. The agent uses the company's product catalog via a MCP server to recommend the right products for customers based on their DIY project. Which language model should I use?```
-1. Open the **Model Catalog** and provide a high-level overview of it's features. Search for **gpt-4.1-nano** (or whichever alternate model GitHub Copilot recommends) and select **Add model** for the **GitHub** hosted version of the model.
+1. Under **Discover** open the **Model Catalog** and provide a high-level overview of it's features. Search for **gpt-4.1-nano** (or whichever alternate model GitHub Copilot recommends) and select **Add model** for the **GitHub** hosted version of the model.
 1. Open the **Model Playground** and select **Compare**. Choose to compare the **gpt-4.1-mini** model and the alternate aforementioned model (ex: **gpt-4.1-nano**).
 1. Attach the image located at `img/demo-living-room.png`. Enter the prompt: `Describe what’s in the image, including colors of the objects`. 
 1. Submit and review the output from the models.

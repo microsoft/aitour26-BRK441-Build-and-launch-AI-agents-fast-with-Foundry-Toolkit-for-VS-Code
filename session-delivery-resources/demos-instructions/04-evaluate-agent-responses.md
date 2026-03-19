@@ -13,7 +13,7 @@ Use **GitHub Copilot Agent Mode** to get evalator recommendations. Run both **ma
 
 **If you did not create a `v3-manual-evaluation`:**
 
-1. In the **Agent Builder**, confirm that the **Cora** agent is still selected. If not, select the **Cora** agent from within **My Resources > Agents > Cora**. This action opens the agent in the **Agent Builder**/
+1. In the **Agent Builder**, confirm that the **Cora** agent is still selected. If not, select the **Cora** agent from within **MLocal Resources > Agents > Local > Cora**. This action opens the agent in the **Agent Builder**/
 1. Confirm that the **gpt-4.1-mini** model is selected.
 1. Switch to the **Evaluation** tab.
 1. Select **+ Add an Empty Row** 4 times.

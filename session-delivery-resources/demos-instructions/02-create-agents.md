@@ -6,14 +6,15 @@ Create the Cora agent in the **Agent Builder** and define it's system prompt.
 
 **If you've already created a `v1-basic-agent`:**
 
-1. Select the agent from within **My Resources > Agents > v1-basic-agent**. This action opens the agent in the **Agent Builder**.
+1. Select the agent from within **My Resources > Local Resources > Agents > v1-basic-agent**. This action opens the agent in the **Agent Builder**.
 1. Confirm that the **gpt-4.1-mini** model is selected.
 1. Provide a high-level overview of what was completed thus far to familiarize the audience with the **Agent Builder**.
 1. Proceed to **Chat with Cora**.
 
 **If you did not create a `v1-basic-agent`:**
 
-1. Open up the **Agent Builder** select **+ New Agent**.
+1. Open up the **Developer Tools** select **Build > + Create Agent**.
+1. In the new tab, select **Open Agent Builder.**
 1. Name the agent **Cora**.
 1. For the model, select **gpt-4.1-mini (Remote via Microsoft Foundry)**.
 1. Enter the following for the **Instructions**:
@@ -39,12 +40,13 @@ Create the Cora agent in the **Agent Builder** and define it's system prompt.
     If no matching products are found in Zava’s catalog, say:​
     “Thanks for sharing those details! I’ve searched our catalog, but it looks like we don’t currently have a product that fits your exact needs. If you'd like, I can suggest some alternatives or help you adjust your project requirements to see if something similar might work.”​
     ```
+1. In the top left of the chat, select the **drop down arrow > Save to Local**
 1. Proceed to **Chat with Cora**.
 
 **Chat with Cora**
 
 1. In the **User Prompt** field, enter the prompt: `Here’s a photo of my living room. I’m not sure whether I should go with eggshell or semi-gloss. Can you tell which would work better based on the lighting and layout?`​
-1. Upload the living room photo located at `img/demo-living-room.png`.
+1. Upload the living room photo located at `/workspace/img/demo-living-room.png`.
 1. Submit and review the output from the agent.
 
 ## Transcript
@@ -94,5 +96,3 @@ Cora is asking follow up questions to the customer. So that way it can better de
 **00:03:16:12 - 00:03:22:02**
 
 And this is where MCP or Model Context Protocol comes into play.
-
-

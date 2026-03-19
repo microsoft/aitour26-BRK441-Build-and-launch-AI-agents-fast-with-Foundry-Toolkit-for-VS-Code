@@ -132,7 +132,7 @@ Although you can create the agent live during the demo, it's recommend to alread
 
 **V1 Agent - Basic**
 
-1. In the AI Toolkit, navigate to the **Agent Builder**.
+1. In the AI Toolkit, navigate to the **Developer tools > + Build > + Create Agent > Open Agent Builder**.
 1. Create a new agent named **Cora**.
 1. For the **Model** field, select **gpt-4.1-mini (Remote via Microsoft Foundry)**.
 1. For the **Instructions** field, enter the following:
@@ -159,7 +159,7 @@ Although you can create the agent live during the demo, it's recommend to alread
   If no matching products are found in Zava’s catalog, say:​
   “Thanks for sharing those details! I’ve searched our catalog, but it looks like we don’t currently have a product that fits your exact needs. If you'd like, I can suggest some alternatives or help you adjust your project requirements to see if something similar might work.”​
   ```
-1. Scroll to the bottom of the Agent Builder and select **Save Version**. Name the version **v1-basic-agent**.
+1. At the top of the Agent Builder and select **drop down > Save to Local**. Name the version **v1-basic-agent**.
 
 **V2 Agent - Tools**
 

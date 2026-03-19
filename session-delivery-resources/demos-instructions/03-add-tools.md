@@ -8,21 +8,24 @@ Create the Cora agent in the **Agent Builder** and define it's system prompt.
 
 **If you've already created a `v2-tools-agent`:**
 
-1. Select the agent from within **My Resources > Agents > v2-tools-agent**. This action opens the agent in the **Agent Builder**.
+1. Select the agent from within **Local Resources > Agents > v2-tools-agent**. This action opens the agent in the **Agent Builder**.
 1. Confirm that the **gpt-4.1-mini** model is selected.
 1. Proceed to **Add tool**.
 
 **If you did not create a `v2-tools-agent`:**
 
-1. In the **Agent Builder**, confirm that the **Cora** agent is still selected. If not, select the **Cora** agent from within **My Resources > Agents > Cora**. This action opens the agent in the **Agent Builder**/
+1. In the **Agent Builder**, confirm that the **Cora** agent is still selected. If not, select the **Cora** agent from within **Local Resources > Agents > Local > Cora**. This action opens the agent in the **Agent Builder**
 1. Confirm that the **gpt-4.1-mini** model is selected.
 1. Proceed to **Add tool**
 
 **Add tool**
 
 1. In the **Tool** section of the **Agent Builder**, select **+ > MCP Server**.
-1. In the **Add MCP Server to Agent** window, select **Use Tools Added in Visual Studio Code**. 
-1. In the **Configure Tools** window, select **mcp_zava-customer2_get_product_by_name**. Uncheck the boxes next to the other tools.
+1. In the **Add MCP Server to Agent** window, select **Use Tools Added in Visual Studio Code**.
+1. In the pop up, select, **Could not find one? Browse more MCP servers** 
+1. In the new window, select the **Custom** tab then under mcp.json, select the **edit button**, it will open up a new mcp.json file.
+1. Go back to the **.vscode/mcp.json** file, copy the contents then paste to the new mcp.json file.
+1. Go back to the Agent Builder, under tools select **+ > MCP Server**, you will find **zava-customer-sales-stdio**. Select the tool and it will be successfully added to your agent.
 1. In the **User Prompt** field, enter the prompt: `Here’s a photo of my living room. I’m not sure whether I should go with eggshell or semi-gloss. Can you tell which would work better based on the lighting and layout?`​
 1. Upload the living room photo located at `img/demo-living-room.png`.
 1. Submit and review the output from the agent. If the agent **does not** invoke a tool call, follow-up with another prompt asking the agent: `How much is Zava eggshell interior paint?`.

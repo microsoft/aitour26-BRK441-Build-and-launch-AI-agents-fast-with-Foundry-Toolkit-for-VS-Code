@@ -4,8 +4,7 @@ Export the code from the **Agent Builder** for the Cora agent. Chat with the Cor
 
 ## Instructions
 
-1. Scroll to the bottom of the **Agent Builder**.
-1. Select **View Code**.
+1. At the top right of the **Agent Builder**, select **View Code**.
 1. For the **SDK** window, select **Microsoft Agent Framework**.
 1. For the **Programming Language** window, select **Python**.
 1. Briefly review the code.
@@ -62,8 +61,3 @@ Naturally, I want to know how much is the product. And in asking that question, 
 **00:03:21:00 - 00:03:32:18**
 
 And adding that logic into an existing app. So that way Zava can place their Cora agent into production for their customers.
-​
-
-​
-
-​
