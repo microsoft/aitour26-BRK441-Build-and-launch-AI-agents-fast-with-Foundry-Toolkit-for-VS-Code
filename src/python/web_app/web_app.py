@@ -196,7 +196,7 @@ async def upload_image(file: UploadFile = File(...)):
 @app.get("/", response_class=HTMLResponse)
 async def get_chat_page(request: Request):
     """Serve the main chat interface"""
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request=request, name="index.html")
 
 @app.get("/health")
 async def health_check():
