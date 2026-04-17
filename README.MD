@@ -4,7 +4,7 @@
 
 # [Microsoft AI Tour 2026](https://aitour.microsoft.com)
 
-## 🔥BRK441: Build and launch AI agents fast with Microsoft Foundry and the Foundry Toolkit
+## 🔥BRK441: Build and launch AI agents fast with Foundry Toolkit for VS Code
 
 [![Microsoft Foundry Discord](https://dcbadge.limes.pink/api/server/Pwpvf3TWaw)](https://aka.ms/MicrosoftFoundryDiscord-AITour26)
 [![Microsoft Foundry Developer Forum](https://img.shields.io/badge/GitHub-Microsoft_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=adff2f&logoColor=fff)](https://aka.ms/MicrosoftFoundryForum-AITour26)
