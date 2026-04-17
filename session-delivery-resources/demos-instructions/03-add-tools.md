@@ -45,7 +45,7 @@ To connect this server and provide its tools to Cora, what I will do is scroll d
 
 **00:00:54:13 - 00:01:22:22**
 
-And you can also create your own servers with the AI toolkit. But I already have one running, so I'm going to select one of the ones that's running in VS code. I only need, in this case the "get products by name". So I'll just select that one and then I'll click okay. And now that tool has been added, we're going to use that same prompt from earlier with Cora to see which product Cora can recommend.
+And you can also create your own servers with the Microsoft Foundry toolkit. But I already have one running, so I'm going to select one of the ones that's running in VS code. I only need, in this case the "get products by name". So I'll just select that one and then I'll click okay. And now that tool has been added, we're going to use that same prompt from earlier with Cora to see which product Cora can recommend.
 
 **00:01:22:22 - 00:01:51:11**
 

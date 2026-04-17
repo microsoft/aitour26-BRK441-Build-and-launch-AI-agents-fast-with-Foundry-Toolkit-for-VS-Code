@@ -43,7 +43,7 @@ Review the responses for each row and select **thumbs up** or **thumbs down**.
 > Running automated evaluations can take a significant amount of time. It is recommended to run this evaluation in advanced.
 
 >[!Note]
-> For your initial run of AI-assisted evaluations, the AI Toolkit extension will download and install the required dependencies. If the Cora agent web app is actively running, temporarily stop the agent as the port it's using will interfere with the evaluation dependency download. After your initial successful run of AI-assisted evaluations, you can subsequently have both the Cora app running as well as execute AI-assisted evaluations given that the required dependencies will have already been downloaded and installed in the container.
+> For your initial run of AI-assisted evaluations, the Microsoft Foundry Toolkit extension will download and install the required dependencies. If the Cora agent web app is actively running, temporarily stop the agent as the port it's using will interfere with the evaluation dependency download. After your initial successful run of AI-assisted evaluations, you can subsequently have both the Cora app running as well as execute AI-assisted evaluations given that the required dependencies will have already been downloaded and installed in the container.
 
 1. From the **Cora** agent, create a new evaluation via the **Add Evaluation** button.
 1. Select the following evaluators: `relevance`, `coherence`.
@@ -118,7 +118,7 @@ And that will be an AI assisted evaluation. To set that up, what we'll do is add
 
 **00:04:45:20 - 00:05:09:10**
 
-And we're going to pass in a new prompt that says which evaluators do you recommend that I should use to do evaluations for my agent. And so what we're going to see here is that GitHub Copilot is going to invoke another AI toolkit tool, which is the evaluation planner.
+And we're going to pass in a new prompt that says which evaluators do you recommend that I should use to do evaluations for my agent. And so what we're going to see here is that GitHub Copilot is going to invoke another Microsoft Foundry toolkit tool, which is the evaluation planner.
 
 **00:05:09:12 - 00:05:29:15**
 

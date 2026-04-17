@@ -55,11 +55,11 @@ The transcript provided below is from the recorded demo video for [Create Agents
 
 **00:00:01:19 - 00:00:22:18**
 
-Here within the AI toolkit, I will open up the Agent Builder. With this open, I can now create the Cora agent. Starting off with giving the agent a name. We'll name the agent Cora as mentioned. And then we want to make sure that we've chosen the proper model. And in our case, we want to use GPT 4.1 mini from Microsoft Foundry.
+Here within the Microsoft Foundry toolkit, I will open up the Agent Builder. With this open, I can now create the Cora agent. Starting off with giving the agent a name. We'll name the agent Cora as mentioned. And then we want to make sure that we've chosen the proper model. And in our case, we want to use GPT 4.1 mini from Microsoft Foundry.
 
 **00:00:22:20 - 00:00:42:14**
 
-Now that the model has been loaded, we can pass in a system prompt for the agent. If you are challenged with creating system prompts, then no problem, because we have a feature in the AI toolkit where we can generate a system prompt for you. What you'll need to do is pass in a description of the task that your agent will be completing.
+Now that the model has been loaded, we can pass in a system prompt for the agent. If you are challenged with creating system prompts, then no problem, because we have a feature in the Microsoft Foundry toolkit where we can generate a system prompt for you. What you'll need to do is pass in a description of the task that your agent will be completing.
 
 **00:00:42:19 - 00:00:57:06**
 

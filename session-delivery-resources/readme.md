@@ -38,7 +38,7 @@ Select the demo name to view instructions for how to deliver the demo. A full tr
 
 | Demo        | Description | Video 
 --------------|-------------|-------------
-[Explore and Compare Models](/01-session-delivery-resources/demos-instructions/explore-compare-models.md)   | Use **GitHub Copilot Agent Mode** to get model recommendations. Browse the **Model Catalog** in the AI Toolkit and compare 2 models within the **Model Playground**. | [Demo video](https://aka.ms/AAxqj4z)
+[Explore and Compare Models](/01-session-delivery-resources/demos-instructions/explore-compare-models.md)   | Use **GitHub Copilot Agent Mode** to get model recommendations. Browse the **Model Catalog** in the Microsoft Foundry Toolkit and compare 2 models within the **Model Playground**. | [Demo video](https://aka.ms/AAxqj4z)
 [Create Agents with Agent Builder](/02-session-delivery-resources/demos-instructions/create-agents.md)   | Create the Cora agent in the **Agent Builder** and define it's system prompt. |  [Demo video](https://aka.ms/AAxq4rm)
 [Add Tools to an Agent in Agent Builder](/03-session-delivery-resources/demos-instructions/add-tools.md)   | Connect the Cora agent to the **Zava MCP server** and add the **get_products_by_name** tool. | [Demo video](https://aka.ms/AAxqc9k)
 [Evaluate Agent Responses](/04-session-delivery-resources/demos-instructions/evaluate-agent-responses.md)   |  Use **GitHub Copilot Agent Mode** to get evalator recommendations. Run both **manual** and **AI-assisted** evaluations for the agent output. | [Demo video](https://aka.ms/AAxqc9h)
@@ -63,7 +63,7 @@ The demos for this breakout are designed to be run in a development container fo
 - [Python 3.10](https://www.python.org/downloads/) (or higher)
 - [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli-windows?view=azure-cli-latest&pivots=winget) - Used for Azure authentication and resource management
 - [Visual Studio Code](https://code.visualstudio.com/download)
-  - [AI Toolkit](https://aka.ms/AIToolkit) extension
+  - [Microsoft Foundry Toolkit](https://aka.ms/AIToolkit) extension
   - [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) extension
   - [Azure Resources](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureresourcegroups) extension
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed
@@ -84,12 +84,12 @@ The demos for this breakout are designed to be run in a development container fo
 Confirm that the dev container has installed the following extensions:
 - [Azure Resources](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureresourcegroups)
 - [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
-- [AI Toolkit](https://aka.ms/AIToolkit)
+- [Microsoft Foundry Toolkit](https://aka.ms/AIToolkit)
 
 If any extension is missing, install before moving forward.
 
 > [!NOTE]
-> The [Microsoft Foundry](https://marketplace.visualstudio.com/items?itemName=TeamsDevApp.vscode-ai-foundry) extension is installed as a bundle with the [AI Toolkit](https://aka.ms/AIToolkit). The [Azure Resources](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureresourcegroups) extension is installed as a bundle with the [Microsoft Foundry](https://marketplace.visualstudio.com/items?itemName=TeamsDevApp.vscode-ai-foundry) extension.*
+> The [Microsoft Foundry](https://marketplace.visualstudio.com/items?itemName=TeamsDevApp.vscode-ai-foundry) extension is installed as a bundle with the [Microsoft Foundry Toolkit](https://aka.ms/AIToolkit). The [Azure Resources](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureresourcegroups) extension is installed as a bundle with the [Microsoft Foundry](https://marketplace.visualstudio.com/items?itemName=TeamsDevApp.vscode-ai-foundry) extension.*
 
 **Sign-in to the Azure Resources extension and set your default project.**
 
@@ -126,13 +126,13 @@ If any extension is missing, install before moving forward.
 1. In the browser, navigate to [https://localhost:8000](http://localhost:8000).
 1. Confirm that the green **Connected** label displays in the top-right of the UI.
 
-**Create 4 iterations of the Cora agent within the AI Toolkit**
+**Create 4 iterations of the Cora agent within the Microsoft Foundry Toolkit**
 
 Although you can create the agent live during the demo, it's recommend to already have saved verisons of the Cora agent prepared to mitigate latency or errors with setup.
 
 **V1 Agent - Basic**
 
-1. In the AI Toolkit, navigate to the **Developer tools > + Build > + Create Agent > Open Agent Builder**.
+1. In the Microsoft Foundry Toolkit, navigate to the **Developer tools > + Build > + Create Agent > Open Agent Builder**.
 1. Create a new agent named **Cora**.
 1. For the **Model** field, select **gpt-4.1-mini (Remote via Microsoft Foundry)**.
 1. For the **Instructions** field, enter the following:
@@ -185,7 +185,7 @@ Although you can create the agent live during the demo, it's recommend to alread
 > Running automated evaluations can take a significant amount of time. It is recommended to run this evaluation in advanced.
 
 >[!Note]
-> For your initial run of AI-assisted evaluations, the AI Toolkit extension will download and install the required dependencies. If the Cora agent web app is actively running, temporarily stop the agent as the port it's using will interfere with the evaluation dependency download. After your initial successful run of AI-assisted evaluations, you can subsequently have both the Cora app running as well as execute AI-assisted evaluations given that the required dependencies will have already been downloaded and installed in the container.
+> For your initial run of AI-assisted evaluations, the Microsoft Foundry Toolkit extension will download and install the required dependencies. If the Cora agent web app is actively running, temporarily stop the agent as the port it's using will interfere with the evaluation dependency download. After your initial successful run of AI-assisted evaluations, you can subsequently have both the Cora app running as well as execute AI-assisted evaluations given that the required dependencies will have already been downloaded and installed in the container.
 
 1. From the **v3-manual-evaluation** agent, create a new evaluation via the **Add Evaluation** button.
 1. Select the following evaluators: `relevance`, `coherence`.

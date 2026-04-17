@@ -20,7 +20,7 @@ The transcript provided below is from the recorded demo video for [Export Agent 
 
 **00:00:00:20 - 00:00:22:16**
 
-For now, let's focus on getting the agent into a real world product. One of Serena's colleagues created the UI for the Cora app and passed along the project files. Therefore, the front end is complete. But what's missing is the brain behind it, the agent logic, the call to the MCP server, and the model responses within the AI toolkit.
+For now, let's focus on getting the agent into a real world product. One of Serena's colleagues created the UI for the Cora app and passed along the project files. Therefore, the front end is complete. But what's missing is the brain behind it, the agent logic, the call to the MCP server, and the model responses within the Microsoft Foundry toolkit.
 
 **00:00:22:21 - 00:00:47:14**
 

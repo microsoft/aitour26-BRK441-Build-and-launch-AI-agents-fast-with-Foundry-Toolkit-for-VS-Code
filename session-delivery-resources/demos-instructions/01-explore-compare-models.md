@@ -1,6 +1,6 @@
 # Explore and Compare Models
 
-Use **GitHub Copilot Agent Mode** to get model recommendations. Browse the **Model Catalog** in the AI Toolkit and compare 2 models within the **Model Playground**.
+Use **GitHub Copilot Agent Mode** to get model recommendations. Browse the **Model Catalog** in the Microsoft Foundry Toolkit and compare 2 models within the **Model Playground**.
 
 ## Instructions
 
@@ -22,7 +22,7 @@ So here within Visual Studio Code, I'm going to open up GitHub Copilot chat. Onc
 
 **00:00:22:17 - 00:00:47:07**
 
-The agent uses a company's product catalog via a MCP server to recommend the right products for customers based on their DIY project. Which language model should I use? Now that that's been sent, what's going to happen is that GitHub Copilot is going to leverage one of the AI toolkit tools that it has access to. And in this case, it's using the get AI model guidance tool.
+The agent uses a company's product catalog via a MCP server to recommend the right products for customers based on their DIY project. Which language model should I use? Now that that's been sent, what's going to happen is that GitHub Copilot is going to leverage one of the Microsoft Foundry toolkit tools that it has access to. And in this case, it's using the get AI model guidance tool.
 
 **00:00:47:09 - 00:01:12:01**
 
@@ -42,7 +42,7 @@ And also it does note here that if we just want to get started with trying somet
 
 **00:02:32:11 - 00:02:37:16**
 
-So to do that we're going to open up the model catalog in the AI toolkit.
+So to do that we're going to open up the model catalog in the Microsoft Foundry toolkit.
 
 **00:02:37:18 - 00:03:02:23**
 
@@ -70,7 +70,7 @@ What we'll want to do now is test out these models in the model playground.
 
 **00:04:15:02 - 00:04:40:12**
 
-So I'll open back up the AI toolkit here, and I'll go to the model playground within the model playground. This is where we can come and compare two models at a time. If you want to just test out one model, you would stay right here within this area. But I want to compare. And so I want to start off with the GPT 4.1 mini model.
+So I'll open back up the Microsoft Foundry toolkit here, and I'll go to the model playground within the model playground. This is where we can come and compare two models at a time. If you want to just test out one model, you would stay right here within this area. But I want to compare. And so I want to start off with the GPT 4.1 mini model.
 
 **00:04:40:12 - 00:04:53:00**
 
